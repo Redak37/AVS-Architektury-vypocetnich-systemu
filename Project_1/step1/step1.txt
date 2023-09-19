@@ -1,0 +1,15 @@
+Jaké je maximální dosažitelné zrychlení celého bìhu kodéru, jestli se soustøedíme na optimalizaci nejzásadnìjších konvoluèních funkcí (v Bottom-up zobrazení by se mìlo jednat o 7 vrchních záznamù)? Výpoèet lze v realizovat dle Amdahlova zákona
+ - Celkový CPU Time: 80.330s
+ - CPU Time funkcí: 6.825s + 4.210s + 3.855s + 3.600s + 3.055s + 2.635s + 2.405s = 26.625s
+ - 80.330s - 26.625s = 53.705s
+ - 80.330s / 53.705s = 1.496
+ - Teoretické zrychlení je tedy témìr 50 %
+
+Jaké je dle vás realisticky dosažitelné zrychlení (nebude pøihlíženo na kvalitu vašeho odhadu)?
+ - Domnívám se, že realisticky dosažitelné zrychlení je tak 25 %
+
+Ze získaných optimalizaèních reportù vypište nejménì 3 pøíèiny, které brání kompi-látoru kód vektorizovat. Nemusíte se omezovat na konkrétní funkce.
+ - outer loop was not auto-vectorized: consider using SIMD directive - nemusí být efektivní
+ - vector dependence prevents vectorization - závislost výsledku na pøedešlé iteraci cyklu nebo domnìlá možná závislost skrze ukazatele.
+ - unaligned access used inside loop body - nezarovnaný pøístup brání vektorizaci celé smyèky
+ - function call to memmove(void *, const void *, size_t) - skoky (jako napø. volání funkcí) brání vektorizaci

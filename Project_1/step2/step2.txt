@@ -1,0 +1,9 @@
+Proè kompilátoru (ve všeobecnosti) vadí pøekrytí filtru a cílového pole?
+ - Datové konflikty - nesmí pøepsat data, která se teprve budou používat, což hrozí pøi vektorizaci.
+
+Co komplikuje vektorizaci horizontální konvoluce na úrovni smyèky ve smìru x? Co zhoršuje vektorizaci na úrovni smyèky ve smìru y?
+ - Smìr x - operátor [] (adresování s bitovou maskou)
+ - Smìr y - závislost na pøedcházející smyèce, neznámá velikost kroku pro src a dst
+
+Který smìr konvoluce (horizontální nebo vertikální) se vám povedlo urychlit (více)? V èem je zásadní rozdíl mezi tìmito kernely?
+ - Více se povedlo urcyhlit vertikální konvoluci.

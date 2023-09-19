@@ -1,0 +1,110 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2ef0863..e2bf4c9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -766,3 +766,4 @@ endforeach()
+ 
+ # Generate aom.pc and setup install rule.
+ setup_aom_install_targets()
++set_source_files_properties("${AOM_ROOT}/av1/common/convolve.c" "${AOM_ROOT}/aom_dsp/aom_convolve.c" PROPERTIES COMPILE_FLAGS "-qopt-report=4 -qopt-report-phase=vec,loop -qopenmp-simd")
+diff --git a/aom_dsp/aom_convolve.c b/aom_dsp/aom_convolve.c
+index 7879b88..2288984 100644
+--- a/aom_dsp/aom_convolve.c
++++ b/aom_dsp/aom_convolve.c
+@@ -22,6 +22,7 @@
+ 
+ static INLINE int horz_scalar_product(const uint8_t *a, const int16_t *b) {
+   int sum = 0;
++  //#pragma omp simd reduction(+:sum)
+   for (int k = 0; k < SUBPEL_TAPS; ++k) sum += a[k] * b[k];
+   return sum;
+ }
+@@ -38,17 +39,34 @@ static void convolve_horiz(const uint8_t *src, ptrdiff_t src_stride,
+                            const InterpKernel *x_filters, int x0_q4,
+                            int x_step_q4, int w, int h) {
+   src -= SUBPEL_TAPS / 2 - 1;
+-  for (int y = 0; y < h; ++y) {
+-    int x_q4 = x0_q4;
+-    for (int x = 0; x < w; ++x) {
+-      const uint8_t *const src_x = &src[x_q4 >> SUBPEL_BITS];
+-      const int16_t *const x_filter = x_filters[x_q4 & SUBPEL_MASK];
+-      const int sum = horz_scalar_product(src_x, x_filter);
+-      dst[x] = clip_pixel(ROUND_POWER_OF_TWO(sum, FILTER_BITS));
+-      x_q4 += x_step_q4;
++
++  if (x_step_q4 == (1 << SUBPEL_BITS)) {
++    const int16_t* const x_filter = x_filters[x0_q4 & SUBPEL_MASK];
++    const int x_q4 = x0_q4 >> SUBPEL_BITS;
++    for (int y = 0; y < h; ++y) {
++      const int dst_s = dst_stride * y;
++      const int src_s = src_stride * y + x_q4;
++      #pragma omp simd
++      for (int x = 0; x < w; ++x) {
++        const uint8_t* const src_x = &src[src_s + x];
++        const int sum = horz_scalar_product(src_x, x_filter);
++        dst[x + dst_s] = clip_pixel(ROUND_POWER_OF_TWO(sum, FILTER_BITS));
++      }
++    }
++  } else {
++    #pragma omp simd
++    for (int y = 0; y < h; ++y) {
++      int x_q4 = x0_q4;
++      for (int x = 0; x < w; ++x) {
++         const uint8_t* const src_x = &src[x_q4 >> SUBPEL_BITS];
++         const int16_t* const x_filter = x_filters[x_q4 & SUBPEL_MASK];
++         const int sum = horz_scalar_product(src_x, x_filter);
++         dst[x] = clip_pixel(ROUND_POWER_OF_TWO(sum, FILTER_BITS));
++         x_q4 += x_step_q4;
++      }
++      src += src_stride;
++      dst += dst_stride;
+     }
+-    src += src_stride;
+-    dst += dst_stride;
+   }
+ }
+ 
+@@ -58,17 +76,33 @@ static void convolve_vert(const uint8_t *src, ptrdiff_t src_stride,
+                           int y_step_q4, int w, int h) {
+   src -= src_stride * (SUBPEL_TAPS / 2 - 1);
+ 
+-  for (int x = 0; x < w; ++x) {
+-    int y_q4 = y0_q4;
+-    for (int y = 0; y < h; ++y) {
+-      const unsigned char *src_y = &src[(y_q4 >> SUBPEL_BITS) * src_stride];
+-      const int16_t *const y_filter = y_filters[y_q4 & SUBPEL_MASK];
+-      const int sum = vert_scalar_product(src_y, src_stride, y_filter);
+-      dst[y * dst_stride] = clip_pixel(ROUND_POWER_OF_TWO(sum, FILTER_BITS));
+-      y_q4 += y_step_q4;
++  if (y_step_q4 == (1 << SUBPEL_BITS)) {
++      const int16_t* const y_filter = y_filters[y0_q4 & SUBPEL_MASK];
++      const int y_q4 = (y0_q4 >> SUBPEL_BITS) * src_stride;
++      #pragma omp simd
++      for (int x = 0; x < w; ++x) {
++          for (int y = 0; y < h; ++y) {
++              const unsigned char* src_y = &src[y_q4 + (y * src_stride)];
++              const int sum = vert_scalar_product(src_y, src_stride, y_filter);
++              dst[y * dst_stride] = clip_pixel(ROUND_POWER_OF_TWO(sum, FILTER_BITS));
++          }
++          ++src;
++          ++dst;
++      }
++  } else {
++    #pragma omp simd
++    for (int x = 0; x < w; ++x) {
++      int y_q4 = y0_q4;
++      for (int y = 0; y < h; ++y) {
++        const unsigned char* src_y = &src[(y_q4 >> SUBPEL_BITS) * src_stride];
++        const int16_t* const y_filter = y_filters[y_q4 & SUBPEL_MASK];
++        const int sum = vert_scalar_product(src_y, src_stride, y_filter);
++        dst[y * dst_stride] = clip_pixel(ROUND_POWER_OF_TWO(sum, FILTER_BITS));
++        y_q4 += y_step_q4;
++      }
++      ++src;
++      ++dst;
+     }
+-    ++src;
+-    ++dst;
+   }
+ }
+ 

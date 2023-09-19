@@ -1,0 +1,76 @@
+﻿Architektury Výpočetních Systémů (AVS 2020)
+Projekt č. 2 (PMC)
+Login: xducho07
+
+Úloha 1: Paralelizace původního řešení
+===============================================================================
+
+1) Kterou ze smyček (viz zadání) je vhodnější paralelizovat a co způsobuje 
+   neefektivitu paralelizaci té druhé?
+
+Vhodnější je paralelizovat vnější smyčku (vyskytující se v metodě marchCubes), v případě paralelizace druhé smyčky dochází k tomu, že se neustále vytváří a zanikají vlákna, která vykonají pouze malý úsek kódu, což vede na vysokou režii a v cíli zpomalení programu.
+
+2) Jaké plánování (rozdělení práce mezi vlákna) jste zvolili a proč? 
+   Jaký vliv má velikost "chunk" při dynamickém plánování (8, 16, 32, 64)?
+	________________________
+	| dragon_vrip_res1.pts |
+	|______________________|
+	|guided      - 34680 ms|
+	|static      - 35155 ms|
+	|dynamic     - 34707 ms|
+	|dynamic(8)  - 34687 ms|
+	|dynamic(16) - 34735 ms|
+	|dynamic(32) - 34741 ms|
+	|dynamic(64) - 34824 ms|
+	|______________________|
+
+- Z provedených měření (na větších datech - dragon_vrip_res1.pts) nevyplývají velké rozdíly, nejspíše protože ač každý cyklus může být trochu jinak náročný, nejedná se o velké rozdíly, jsou však dostatečné, aby static vycházelo hůř, zvolil jsem proto variantu guided.
+
+3) Jakým způsobem zajišťujete ukládání trojúhelníků z několika vláken současně?
+ - K tomuto účelu je využita kritická sekce (#pragma omp critical), díky které lze v jednu chvíli ukládat trojúhelník pouze v jednom vláknu, zatímco ostatní musejí čekat.
+
+
+Úloha 2: Paralelní průchod stromem
+===============================================================================
+
+1) Stručně popište použití OpenMP tasků ve vašem řešení.
+ - ve vlastní metodě (evaluateCube) se metoda sama rekurzivně volá jako 8 tasků reprezentující části krychle až do dosažení maximální hloubky.
+
+2) Jakým způsobem jste realizovali sesbírání celkového počtu trojúhelníků?
+ - Spočítané počty trojúhelníků v podkrychlích jsou přičítány atomicky (pomocí #pragma omp atomic update) pro zajištění konzistence. Před vrácením počtu trojúhelníků se čeká na doběhnutí tasků (#pragma omp taskwait), až je nakonec vrácen akumulovaný počet trojúhelníků do funkce marchCubes.
+
+3) Jaký vliv má na vaše řešení tzv. "cut-off"? Je vhodné vytvářet nový 
+   task pro každou krychli na nejnižší úrovni?
+ - Při "cut-offu" nebudou spočteny všechny části prostoru a tedy budou chybět trojúhelníky ve výsledku. Tasky je vhodné vytvářet ve všech úrovních kromě úplně nejnižší, jelikož v ní již nedochází k rozdělení prostoru na 8 podčástí a tedy by byla tvořena pouze jedním taskem.
+
+4) Jakým způsobem zajišťujete ukládání trojúhelníků z několika vláken současně?
+ -  (Stejně jako v předešlém úkolu.) K tomuto účelu je využita kritická sekce (#pragma omp critical), díky které lze v jednu chvíli ukládat trojúhelník pouze v jednom vláknu, zatímco ostatní musejí čekat.
+
+Úloha 3: Předvýpočet hodnot pole
+===============================================================================
+
+1) Dochází v případě tohoto řešení k omezení výkonu propustností paměti? 
+   Došlo k nějakým změnám ve využití paměťového subsystému v porovnání 
+   s úlohou 1?
+   (Ověřte nástrojem Intel VTune na některé z větších mřížek -- např. 512)
+ - V loop variantě k omezení výkonu propustností paměti prakticky nedochází, v cached variantě při malém počtu bodů ano, jelikož dochází k velkému počtu cache miss, v případě velkého počtu bodů k omezení propustností pamětí prakticky nedochází.
+
+2) V jaké situaci bude toto řešení nejvýhodnější (nejrychlejší)?
+Prakticky vždy mimo malých dat s příliš velkou mřížkou, kde nedochází k násobnému přepočítání již dříve spočítaných dat a přístupy do RAM mohou vytvářet mnoho cache miss.
+
+
+Úloha 4: Grafy škálování všech řešení
+===============================================================================
+
+1) Stručně zhodnoťte efektivitu vytvořených řešení (na základě grafů škálování).
+ - Z grafu škálování mřížky lze vysledovat, že varianta cached je nejrychlejší již od velmi malých hodnot. Octree oproti tomu začíná na podobné rychlosti jako Loop a až při vyšších hodnotách je stabilně více než dvakrát rychlejší než Loop. Zároveň je vidět, že ve všech případech rostě čas vůči velikosti mřížky relativně lineárně.
+ - Z grafů silného škálování lze vysledovat vyšší efektivitu varianty Octree oproti variantě Loop nehledě na množství vláken i velikost problému. Cached varianta začíná na vyšším času i pro velmi malé problémy (input size <= 40), pro které trvá déle než Octree (pro input size 40 trvá od využití alespoň dvou vláken velmi podobně), přesto vychází vždy kromě kombinace extra malých dat a velkého množství vláken (input size 10, 16 vláken) lépe než Loop varianta a pro větší problémy i lépe než Octree varianta.
+ - Z grafů slabého škálování lze vypozorovat, že Loop varianta je opět všude nejpomalejší, nicméně čas je při dané velikosti problému vůči počtu vláken přibližně konstantní. U Octree čas vůči velikosti na vlákno zhruba lineárně stoupá. V případě Cached verze se začíná na vyšších časech a s přibývajícími vlákny se dorovnává Octree varianta (v případech větších úloh na vlákno i překonává).
+
+2) V jakém případě (v závislosti na počtu bodů ve vstupním souboru a velikosti 
+   mřížky) bude vaše řešení 1. úlohy neefektivní? (pokud takový případ existuje)
+ - V žádném případě by nemělo docházet k vybočujícím neefektivnostem, nicméně takřka vždy (obzvlášť za předpokladu většího počtu dat či velikosti mřížky) je tato varianta pomalejší než zbylé dvě.
+
+3) Je (nebo není) stromový algoritmus efektivnější z pohledu slabého škálování 
+   vzhledem ke vstupu?
+ - Stromový algoritmus vypadá z grafu efektivnější vůči slabému škálování, jelikož zde dochází spíše k poklesu času, nicméně to je porušeno pro 16 vláken kdy čas stoupl. Nelze tedy předpokládat, že při větších datech a ještě vyšším počtu vláken by pořád vypadal graf takto efektivně.

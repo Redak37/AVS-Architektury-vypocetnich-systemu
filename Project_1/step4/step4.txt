@@ -1,0 +1,8 @@
+Povedlo se vektorizovat všechny vzniklé cykly ve funkci? Proè?
+ - Ne, v jednom pøípadì toho nelze dosáhnout kvùli nepodporovanému datovému typu.
+
+Otestujte dosažené zrychlení na videu rush hour, aby jste ovìøili „pøenositelnost” optimalizací na jiné video. Dosáhli jste stejných výsledkù jako v pøípadì videa park joy?
+ - Ano, dosáhl.
+
+Jaké jsou výhody psaní „vektorizovatelného” a jinak paralelizovatelného kódu a využívaní kompilátoru oproti psaní v jazyce symbolických instrukcí nebo využívání intrinsic funkcí? (Pro inspiraci se podívejte napø. do aom/av1/common/x86/).
+ - Snazší udržitenost kódu, vyšší pøenositelnost

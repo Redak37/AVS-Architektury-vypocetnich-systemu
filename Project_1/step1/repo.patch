@@ -1,0 +1,9 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2ef0863..5a0fea8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -766,3 +766,4 @@ endforeach()
+ 
+ # Generate aom.pc and setup install rule.
+ setup_aom_install_targets()
++set_source_files_properties("${AOM_ROOT}/av1/common/convolve.c" "${AOM_ROOT}/aom_dsp/aom_convolve.c" PROPERTIES COMPILE_FLAGS "-qopt-report=4 -qopt-report-phase=vec,loop")

@@ -1,0 +1,306 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 19.1.1.217 Build 20200306
+
+Compiler options: -I/home/training/dd-20-28-28/aom/third_party/googletest/src/googletest/include -I/home/training/dd-20-28-28/aom/third_party/googletest/src/googletest -I/home/training/dd-20-28-28/aom -I/home/training/dd-20-28-28/aom-build -I/home/training/dd-20-28-28/aom/apps -I/home/training/dd-20-28-28/aom/common -I/home/training/dd-20-28-28/aom/examples -I/home/training/dd-20-28-28/aom/stats -I/home/training/dd-20-28-28/aom/third_party/libyuv/include -I/home/training/dd-20-28-28/aom/third_party/libwebm -march=native -O2 -g -DNDEBUG -std=c99 -Wall -Wdisabled-optimization -Wextra -Wfloat-conversion -Wimplicit-function-declaration -Wpointer-arith -Wshorten-64-to-32 -Wsign-compare -Wtype-limits -Wuninitialized -Wunused -Wvla -Wshadow -Wundef -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -qopt-report=4 -qopt-report-phase=vec,loop -qopenmp-simd -o CMakeFiles/aom_dsp_common.dir/aom_dsp/aom_convolve.c.o -c
+
+Begin optimization report for: aom_convolve8_horiz_c(const uint8_t *, ptrdiff_t, uint8_t *, ptrdiff_t, const int16_t *, int, const int16_t *, int, int, int)
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(45,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(49,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference dst[x+dst_s] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(52,9) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 8
+      remark #15309: vectorization support: normalized vectorization overhead 1.009
+      remark #15301: SIMD LOOP WAS VECTORIZED
+      remark #15450: unmasked unaligned unit stride loads: 8 
+      remark #15451: unmasked unaligned unit stride stores: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 81 
+      remark #15477: vector cost: 13.620 
+      remark #15478: estimated potential speedup: 5.430 
+      remark #15488: --- end vector cost summary ---
+
+      LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,3) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+         remark #25436: completely unrolled by 8   (pre-vector) 
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(49,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+   <Remainder loop for vectorization>
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference a[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+      remark #15389: vectorization support: reference dst[x+dst_s] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(52,9) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 2
+      remark #15309: vectorization support: normalized vectorization overhead 0.597
+      remark #15301: REMAINDER LOOP WAS VECTORIZED
+      remark #15450: unmasked unaligned unit stride loads: 8 
+      remark #15451: unmasked unaligned unit stride stores: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 81 
+      remark #15477: vector cost: 13.620 
+      remark #15478: estimated potential speedup: 5.430 
+      remark #15488: --- end vector cost summary ---
+   LOOP END
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(49,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(57,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <src_x[k]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <src_x[k]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <src_x[k]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <src_x[k]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <src_x[k]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <src_x[k]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <src_x[k]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+   remark #15328: vectorization support: non-unit strided load was emulated for the variable <src_x[k]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,48) ]
+   remark #15329: vectorization support: non-unit strided store was emulated for the variable <dst[x]>, stride is unknown to compiler   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(63,10) ]
+   remark #15305: vectorization support: vector length 8
+   remark #15309: vectorization support: normalized vectorization overhead 0.226
+   remark #15301: SIMD LOOP WAS VECTORIZED
+   remark #15452: unmasked strided loads: 8 
+   remark #15453: unmasked strided stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 85 
+   remark #15477: vector cost: 50.370 
+   remark #15478: estimated potential speedup: 1.660 
+   remark #15488: --- end vector cost summary ---
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(59,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+      remark #15548: loop was vectorized along with the outer loop
+
+      LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(25,3) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+         remark #25436: completely unrolled by 8   (pre-vector) 
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(57,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+<Remainder loop for vectorization>
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(59,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(128,3)
+      remark #25460: No loop optimizations reported
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: aom_convolve8_vert_c(const uint8_t *, ptrdiff_t, uint8_t *, ptrdiff_t, const int16_t *, int, const int16_t *, int, int, int)
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(82,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+   remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15389: vectorization support: reference *(src+U8_V+src_stride*-3+y_q4+y*src_stride+?) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,41) ]
+   remark #15389: vectorization support: reference *(src+U8_V+src_stride*-3+y_q4+y*src_stride+?+src_stride) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,41) ]
+   remark #15389: vectorization support: reference *(src+U8_V+src_stride*-3+y_q4+y*src_stride+?+2*src_stride) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,41) ]
+   remark #15389: vectorization support: reference *(src+U8_V+src_stride*-3+y_q4+y*src_stride+?+3*src_stride) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,41) ]
+   remark #15389: vectorization support: reference *(src+U8_V+src_stride*-3+y_q4+y*src_stride+?+4*src_stride) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,41) ]
+   remark #15389: vectorization support: reference *(src+U8_V+src_stride*-3+y_q4+y*src_stride+?+5*src_stride) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,41) ]
+   remark #15389: vectorization support: reference *(src+U8_V+src_stride*-3+y_q4+y*src_stride+?+6*src_stride) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,41) ]
+   remark #15389: vectorization support: reference *(src+U8_V+src_stride*-3+y_q4+y*src_stride+?+7*src_stride) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,41) ]
+   remark #15389: vectorization support: reference *(dst+(y-1)*dst_stride) has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(86,15) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15305: vectorization support: vector length 8
+   remark #15309: vectorization support: normalized vectorization overhead 0.974
+   remark #15301: SIMD LOOP WAS VECTORIZED
+   remark #15450: unmasked unaligned unit stride loads: 8 
+   remark #15451: unmasked unaligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 96 
+   remark #15477: vector cost: 14.620 
+   remark #15478: estimated potential speedup: 5.960 
+   remark #15488: --- end vector cost summary ---
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(83,11) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+      remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+      remark #25452: Original Order found to be proper, but by a close margin
+      remark #25084: Preprocess Loopnests: Moving Out Store    [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(85,31) ]
+      remark #15548: loop was vectorized along with the outer loop
+
+      LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,3) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+         remark #25436: completely unrolled by 8   (pre-vector) 
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(82,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+<Remainder loop for vectorization>
+   remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+   remark #15450: unmasked unaligned unit stride loads: 8 
+   remark #15451: unmasked unaligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 96 
+   remark #15477: vector cost: 14.620 
+   remark #15478: estimated potential speedup: 5.960 
+   remark #15488: --- end vector cost summary ---
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(83,11) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+      remark #25460: No loop optimizations reported
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(93,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+   remark #15389: vectorization support: reference src_y[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,48) ]
+   remark #15389: vectorization support: reference src_y[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,48) ]
+   remark #15389: vectorization support: reference src_y[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,48) ]
+   remark #15389: vectorization support: reference src_y[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,48) ]
+   remark #15389: vectorization support: reference src_y[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,48) ]
+   remark #15389: vectorization support: reference src_y[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,48) ]
+   remark #15389: vectorization support: reference src_y[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,48) ]
+   remark #15389: vectorization support: reference src_y[k] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,48) ]
+   remark #15389: vectorization support: reference dst[y] has unaligned access   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(99,9) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15305: vectorization support: vector length 8
+   remark #15309: vectorization support: normalized vectorization overhead 1.009
+   remark #15301: SIMD LOOP WAS VECTORIZED
+   remark #15450: unmasked unaligned unit stride loads: 8 
+   remark #15451: unmasked unaligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 84 
+   remark #15477: vector cost: 14.620 
+   remark #15478: estimated potential speedup: 5.260 
+   remark #15488: --- end vector cost summary ---
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(95,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+      remark #15548: loop was vectorized along with the outer loop
+
+      LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(32,3) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+         remark #25436: completely unrolled by 8   (pre-vector) 
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(93,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+<Remainder loop for vectorization>
+   remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+   remark #15450: unmasked unaligned unit stride loads: 8 
+   remark #15451: unmasked unaligned unit stride stores: 1 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 84 
+   remark #15477: vector cost: 14.620 
+   remark #15478: estimated potential speedup: 5.260 
+   remark #15488: --- end vector cost summary ---
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(95,7) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(143,3)
+      remark #25460: No loop optimizations reported
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: aom_convolve_copy_c(const uint8_t *, ptrdiff_t, uint8_t *, ptrdiff_t, const int16_t *, int, const int16_t *, int, int, int)
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(158,3)
+   remark #15527: loop was not vectorized: function call to memcpy(void *__restrict__, const void *__restrict__, size_t) cannot be vectorized   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(159,5) ]
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 2
+LOOP END
+===========================================================================
+
+Begin optimization report for: aom_highbd_convolve8_horiz_c(const uint8_t *, ptrdiff_t, uint8_t *, ptrdiff_t, const int16_t *, int, const int16_t *, int, int, int, int)
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(188,3) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(234,3)
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(190,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(234,3)
+   <Predicate Optimized v1>
+      remark #25422: Invariant Condition at line 81 hoisted out of this loop
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+      remark #15346: vector dependence: assumed ANTI dependence between x_filter[k] (177:41) and dst[x] (194:7)
+
+      LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(177,3) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(234,3)
+         remark #25436: completely unrolled by 8   (pre-vector) 
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(190,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(234,3)
+   <Predicate Optimized v3>
+      remark #25422: Invariant Condition at line 81 hoisted out of this loop
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+      remark #15346: vector dependence: assumed ANTI dependence between x_filter[k] (177:41) and dst[x] (194:7)
+   LOOP END
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(190,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(234,3)
+   <Predicate Optimized v4>
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+      remark #15346: vector dependence: assumed ANTI dependence between x_filter[k] (177:41) and dst[x] (194:7)
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: aom_highbd_convolve8_vert_c(const uint8_t *, ptrdiff_t, uint8_t *, ptrdiff_t, const int16_t *, int, const int16_t *, int, int, int, int)
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(209,3) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(248,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(211,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(248,3)
+   <Predicate Optimized v1>
+      remark #25422: Invariant Condition at line 81 hoisted out of this loop
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+      remark #15346: vector dependence: assumed ANTI dependence between y_filter[k] (170:41) and dst[y*dst_stride] (215:7)
+
+      LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(170,3) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(248,3)
+         remark #25436: completely unrolled by 8   (pre-vector) 
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(211,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(248,3)
+   <Predicate Optimized v3>
+      remark #25422: Invariant Condition at line 81 hoisted out of this loop
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+      remark #15346: vector dependence: assumed ANTI dependence between y_filter[k] (170:41) and dst[y*dst_stride] (215:7)
+   LOOP END
+
+   LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(211,5) inlined into /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(248,3)
+   <Predicate Optimized v4>
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+      remark #15346: vector dependence: assumed ANTI dependence between y_filter[k] (170:41) and dst[y*dst_stride] (215:7)
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: aom_highbd_convolve_copy_c(const uint8_t *, ptrdiff_t, uint8_t *, ptrdiff_t, const int16_t *, int, const int16_t *, int, int, int, int)
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(266,3)
+   remark #15527: loop was not vectorized: function call to memcpy(void *__restrict__, const void *__restrict__, size_t) cannot be vectorized   [ /home/training/dd-20-28-28/aom/aom_dsp/aom_convolve.c(267,5) ]
+LOOP END
+===========================================================================
